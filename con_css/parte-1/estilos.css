@@ -1,0 +1,9 @@
+#contenedorSlider, #contenedorB {
+	display: block;
+	overflow: hidden;
+	position: relative;
+}
+
+.imagen {
+	position: absolute;
+}
