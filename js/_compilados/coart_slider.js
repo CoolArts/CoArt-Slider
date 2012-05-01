@@ -21,7 +21,7 @@ coart.slider = {
 		var i;
 		
 		for (i=0; i<this.totalImagenes(); i++) {
-			imagenes[i].actualizar();
+			imagenes[i].actualizar(totalImagenes()-1);
 		}
 	}
 }

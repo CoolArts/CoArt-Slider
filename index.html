@@ -1,16 +1,17 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
-	<title>Transformando el slider</title>
-	<script type="text/javascript" src="../../../FrameWorks/javascript/jquery.js"></script>
-	<script type="text/javascript" src="js/coart_slplug.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function () {
-			var miSlider = $.coArtSld('.coartSld', ['img/1.gif', 'img/2.gif', 'img/3.gif', 'img/4.gif'], 350);
-		});
-	</script>
-</head>
-<body class="coartSld">
-<div style="display: block; width: 80px; height: 80px; background: #F00"></div>
-</body>
+	<head>
+		<title>Transformando el slider</title>
+		<link type="text/css" rel="stylesheet" href="css/coart_slplug_css.css" /></link>
+		<script type="text/javascript" src="../../../FrameWorks/javascript/jquery.js"></script>
+		<script type="text/javascript" src="js/coart_slplug.js"></script>
+		<script type="text/javascript">
+			$(document).ready(function () {
+				var miSlider = $.coArtSld(['img/1.gif', 'img/2.gif', 'img/3.gif', 'img/4.gif'], 350);
+			});
+		</script>
+	</head>
+	<body>
+		<div class="coart_Sld"></div>
+	</body>
 </html>
