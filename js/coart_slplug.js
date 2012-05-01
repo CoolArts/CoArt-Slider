@@ -17,10 +17,10 @@
 				cargarScripts();
 			});
 		}
-		else {iniciar(sel, imgs, vel)};
+		else {iniciar()};
 	};
 	
-	function iniciar (sel, imgs, vel) {
+	function iniciar () {
 		var slider = Object.create(coart.core);
 		slider.iniciar(sel, imgs, vel);
 		return slider;

@@ -8,9 +8,9 @@ coart.core = {
 	velocidad: null, //En milisegundos
 	imagenes: null,
 	
-	iniciar: function (este, imgs, vel) {
+	iniciar: function (sel, imgs, vel) {
 		slider = coart.slider.extender();
-		$contenedor = $(este);
+		$contenedor = $(sel);
 		ancho = $contenedor.width();
 		alto = $contenedor.height();
 		velocidad = vel;

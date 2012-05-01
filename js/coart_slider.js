@@ -15,5 +15,13 @@ coart.slider = {
 	
 	nuevaImagen: function (imagen) {
 		this.imagenes.push(imagen);
+	},
+	
+	actualizar: function () {
+		var i;
+		
+		for (i=0; i<this.totalImagenes(); i++) {
+			imagenes[i].actualizar();
+		}
 	}
 }

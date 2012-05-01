@@ -59,5 +59,10 @@ coart.imagen = {
 		}
 		
 		else {return false};
+	},
+	
+	actualizar: function () {
+		//Accion de mover la imagen
+		console.log(this.contenedor);
 	}
 }
