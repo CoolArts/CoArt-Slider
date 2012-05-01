@@ -1,30 +1,25 @@
-﻿jQuery.fn.coolArtSlider = function () {
-	if(typeof Object.create !== "function") {
-		Object.create = function (o) {
-			function F() {}
-			F.prototype = o;
-			return new F();
-		};
-	}
+﻿var coart = coart || {};
+
+coart.core = {
+	slider: null,
+	$contendor: null,
+	ancho: null,
+	alto: null,
+	velocidad: null, //En milisegundos
+	imagenes: null,
 	
-	var slider,
-		$contendor,
-		ancho,
-		alto,
-		velocidad, //En milisegundos
-		imagenes;
-	
-	function crearSlider(cont, imgs, vel) {
+	iniciar: function (este, imgs, vel) {
 		slider = coart.slider.extender();
-		$contenedor = $(cont);
+		$contenedor = $(este);
 		ancho = $contenedor.width();
 		alto = $contenedor.height();
 		velocidad = vel;
 		imagenes = imgs;
-		instanciarSlider();
-	}
 	
-	function instanciarSlider() {
+		this.instanciar();
+	},
+	
+	instanciar: function () {
 		var i, imagen;
 		
 		for (i=0; i<imagenes.length; i++) {
@@ -32,13 +27,11 @@
 				contenedor: $contenedor,
 				posicion: i,
 				velocidad: velocidad,
-				src: imagenes[i]				
+				src: imagenes[i]	
 			});
 			
 			imagen.instanciar();
 			slider.nuevaImagen(imagen);
 		}
 	}
-		
-	return this;
 }
