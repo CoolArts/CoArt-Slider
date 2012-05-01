@@ -2,12 +2,15 @@
 <html>
 <head>
 	<title>Transformando el slider</title>
-	//IMPORTANTE//Cambiar esta linea por vuestra ruta de jQuey
 	<script type="text/javascript" src="../../../FrameWorks/javascript/jquery.js"></script>
-	<script type="text/javascript" src="js/coart_imagen.js"></script>
-	<script type="text/javascript" src="js/coart_slider.js"></script>
-	<script type="text/javascript" src="js/coart_slcore.js"></script>
+	<script type="text/javascript" src="js/coart_slplug.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			var miSlider = $.coArtSld('.coartSld', ['imagen1', 'imagen2', 'imagen3'], 350);
+		});
+	</script>
 </head>
-<body>
+<body class="coartSld">
+<div style="display: block; width: 80px; height: 80px; background: #F00"></div>
 </body>
 </html>
