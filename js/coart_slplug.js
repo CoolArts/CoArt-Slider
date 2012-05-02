@@ -1,5 +1,18 @@
 ﻿var coart = coart || {};
 
+coart.extender = function (Objeto, propiedades) {
+	var propiedades, objeto;
+	objeto = Object.create(Objeto);
+	
+	for (propiedad in propiedades) {
+		if (propiedades.hasOwnProperty(propiedad)) {
+			objeto[propiedad] = propiedades[propiedad]
+		}
+	}
+	
+	return objeto;
+};
+
 coart.imagen = {
 	y: 0,
 	x: 0,
@@ -8,55 +21,56 @@ coart.imagen = {
 	velocidad: null,
 	imagen: null,
 	src: null,
-	
-	extender: function (propiedades) {
-		var propiedades, objeto;
-		objeto = Object.create(this);
-		
-		for (propiedad in propiedades) {
-			if (propiedades.hasOwnProperty(propiedad)) {
-				objeto[propiedad] = propiedades[propiedad]
-			}
-		}
-		
-		return objeto;
-	},
+	origPos: null,
 	
 	iniciar: function (media) {
-		$(this.imagen).attr('src', this.src)
+		this.origPos = media*this.posicion;
+		
+		$(this.imagen).attr({
+			'src': this.src,
+			'pos':this.posicion
+			})
 			.css({
-				'left': media*this.posicion,
+				'left': this.origPos,
 				'position': 'absolute'
 			});
 	},
 	
-	actualizar: function (total) {
-	
+	actualizar: function (nuevaPosicion) {
+		console.log(this.origPos);
+		var posicion;
+		
+		if (nuevaPosicion != 0) {posicion = nuevaPosicion}
+		else {posicion = this.origPos}
+		console.log(posicion);
+		$(this.imagen).animate({left: posicion}, this.velocidad).dequeue()
 	}
 };
 
 coart.slider = {
+	objetivo: null,
+	ancho: null,
 	imagenes: new Array(),
 	
 	totalImagenes: function () {
 		return this.imagenes.length;
-	},
-
-	extender: function () {
-		var objeto;
-		objeto = Object.create(this);
-		return objeto;
 	},
 	
 	nuevaImagen: function (imagen) {
 		this.imagenes.push(imagen);
 	},
 	
-	actualizar: function () {
-		var i;
-		
-		for (i=0; i<this.totalImagenes(); i++) {
-			imagenes[i].actualizar(totalImagenes()-1);
+	actualizar: function (tamImg) {
+		var i,
+			x = 0,
+			total = this.totalImagenes(),
+			posicion = parseInt(this.objetivo),
+			media = (this.ancho - tamImg)/(total-1);
+			
+		for (i=1; i<total; i++) {
+			if (i<=posicion) {x = media*i}
+			else {x = (media*(i-1))+tamImg}
+			this.imagenes[i].actualizar(x)
 		}
 	}
 };
@@ -68,11 +82,42 @@ coart.core = {
 	imagenes: null,
 	
 	iniciar: function (imgs, vel) {
-		this.slider = coart.slider.extender();
 		this.contenedor = $('.coart_Sld');
 		this.ancho = $(this.contenedor).width();
+		this.slider = coart.extender(coart.slider, {ancho: this.ancho});
+		this.eventos();
 		this.imagenes = imgs;
 		this.instanciar(vel);
+	},
+	
+	eventos: function () {
+		var contenedor = this; 
+		$(this.contenedor).live('mousemove', function (evento) {contenedor.escuchas(evento)});
+		$(this.contenedor).live('mouseout', function (evento) {contenedor.escuchas(evento)});
+		//En proyecto mental (Hacerlo alternativo);
+		//$(this.contenedor).live('click', this.navegar());
+	},
+	
+	escuchas: function (evento) {
+		var objetivo, ancho;
+		
+		switch (evento.type) {
+			case 'mousemove':
+			
+				objetivo = $(evento.target).attr('pos');
+				
+				if (objetivo != this.objetivo) {
+					this.objetivo = objetivo;
+					ancho = $(evento.target).width();
+					this.slider.actualizar(ancho);
+				};
+				
+				break;
+			case 'mouseout':
+				this.objetivo = null;
+				this.actualizar(0);
+				break;
+		}
 	},
 	
 	crearImagen: function () {
@@ -87,7 +132,7 @@ coart.core = {
 			total = this.imagenes.length;
 		
 		for (i=0; i<total; i++) {
-			imagen = coart.imagen.extender({
+			imagen = coart.extender(coart.imagen, {
 				imagen: this.crearImagen(),
 				posicion: i,
 				velocidad: vel,
