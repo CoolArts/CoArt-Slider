@@ -2,16 +2,15 @@
 <html>
 	<head>
 		<title>Transformando el slider</title>
-		<link type="text/css" rel="stylesheet" href="css/coart_slplug_css.css" /></link>
 		<script type="text/javascript" src="../../../FrameWorks/javascript/jquery.js"></script>
 		<script type="text/javascript" src="js/coart_slplug.js"></script>
 		<script type="text/javascript">
 			$(document).ready(function () {
-				var miSlider = $.coArtSld(['img/1.gif', 'img/2.gif', 'img/3.gif', 'img/4.gif'], 150);
-			});
+				$.coArtSld('js/miSlider.json')
+			})
 		</script>
 	</head>
 	<body>
-		<div class="coart_Sld"></div>
+		<div id="coart_Sld" style="width: 500px; height: 200px"></div>
 	</body>
 </html>

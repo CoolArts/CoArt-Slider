@@ -1,4 +1,20 @@
-﻿jQuery.coArtSld = function () {	
+﻿jQuery.coArtSld = function (contenidos) {
+	var scripts = [
+		'js/coart_slext.js',
+		'js/coart_slimg.js',
+		'js/coart_slslid.js',
+		'js/coart_slcore.js'
+	],
+		total = 0,
+		script;
+	
+	for (script in scripts) {
+		$.getScript(scripts[script], function () {
+			total++;
+			cargar();
+		})
+	}
+	
 	if(typeof Object.create !== "function") {
 		Object.create = function (o) {
 			function F() {}
@@ -7,19 +23,27 @@
 		};
 	};
 	
+	function cargar () {
+		if (total == scripts.length) {
+			iniciar();
+		}
+	}
+	
 	function iniciar () {		
 		$.getJSON(
-			'slider_config.json',
+			contenidos,
 			function (datos) {				
-				var imagenes = datos.imagenes,
-					velocidad = datos.velocidad,
+				var x,
 					slider = Object.create(coart.core);
-					
-				slider.iniciar(imagenes, velocidad);
+				
+				if (datos.carpeta) {
+					for (x in datos.imagenes) {
+						datos.imagenes[x].imagen = datos.carpeta+datos.imagenes[x].imagen
+					}
+				}
+				
+				slider.iniciar(datos);
 		});
 	};
-	
-	iniciar();
 }
 
-$.coArtSld();

@@ -6,8 +6,8 @@ coart.core = {
 	imagenes: null,
 	objetivo: null,
 	
-	iniciar: function (imgs, vel) {
-		this.contenedor = $('.coart_Sld');
+	iniciar: function (datos) {
+		this.contenedor = $(datos.id);
 		this.contenedor.css({
 			display: 'block',
 			position: 'relative',
@@ -18,8 +18,8 @@ coart.core = {
 			ancho: $(this.contenedor).width()
 		});
 		this.eventos();
-		this.imagenes = imgs;
-		this.instanciar(vel);
+		this.imagenes = datos.imagenes;
+		this.instanciar(datos.velocidad);
 	},
 	
 	eventos: function () {
@@ -63,9 +63,12 @@ coart.core = {
 		}
 	},
 	
-	crearImagen: function () {
+	crearImagen: function (link) {
         var imagen = document.createElement('img');
-		$(this.contenedor).append(imagen);
+		$(this.contenedor)
+			.append($('<a />')
+				.attr('href', link)
+				.append(imagen));
 		return imagen;
     },
 	
@@ -76,10 +79,11 @@ coart.core = {
 		
 		for (i=0; i<total; i++) {
 			imagen = coart.extender(coart.imagen, {
-				imagen: this.crearImagen(),
+				imagen: this.crearImagen(this.imagenes[i].url),
 				posicion: i,
 				velocidad: vel,
-				src: this.imagenes[i]	
+				src: this.imagenes[i].imagen,
+				titulo: this.imagenes[i].titulo
 			});
 			
 			imagen.iniciar(this.slider.ancho/total);

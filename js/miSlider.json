@@ -1,0 +1,23 @@
+﻿{
+	'id': '#coart_Sld',
+	'velocidad': 150,
+	'carpeta': 'img/',
+	'imagenes': [{
+			imagen: '1.gif',
+			url: '#1.html',
+			titulo: 'imagen 1'
+		}, {
+			imagen: '2.gif',
+			url: '#2.html',
+			titulo: 'imagen 2'
+		}, {
+			imagen: '3.gif',
+			url: '#3.html',
+			titulo: 'imagen 3'
+		}, {
+			imagen: '4.gif',
+			url: '#4.html',
+			titulo: 'imagen 4'
+		}
+	]
+}

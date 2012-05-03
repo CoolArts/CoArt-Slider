@@ -9,13 +9,15 @@ coart.imagen = {
 	imagen: null,
 	src: null,
 	origPos: null,
+	titulo: null,
 	
 	iniciar: function (media) {
 		this.origPos = media*this.posicion;
 		
 		$(this.imagen).attr({
 			'src': this.src,
-			'pos':this.posicion
+			'pos':this.posicion,
+			'title': this.titulo
 			})
 			.css({
 				'left': this.origPos,
