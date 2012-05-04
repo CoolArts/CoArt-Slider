@@ -1,13 +1,17 @@
 ﻿//Definimos la función que iniciará nuestro plug-in
 //Le pasaremos la ruta con nuestro archivo .slider
-jQuery.coArtSld = function (contenidos) {
-	//Definimos un array
-	//con todos los scripts a cargar
+//y alternativamente un función que será el callback
+//y devolverá el Objeto "coart.core".
+jQuery.coArtSld = function (contenidos, funcion) {
+	//Definimos un array con los scripts a cargar
 	var scripts = [
 		'js/coart_slext.js',
 		'js/coart_slimg.js',
 		'js/coart_slslid.js',
 		'js/coart_slcore.js'],
+		
+		//Definimos la variable que usaremos en el bucle
+		script;
 		
 		//Definimos una varibale total
 		total = 0;
@@ -44,9 +48,8 @@ jQuery.coArtSld = function (contenidos) {
 	function iniciar () {
 		//Cargamos nuestro archivo .slider
 		$.getJSON(
+			//Cargamos la URL que recibimos en los parámetros
 			contenidos,
-			//recogemos los datos del archivo
-			//que es un objeto con los datos
 			function (datos) {
 				//Definimos x para usarla en el bucle
 				var x,
@@ -67,7 +70,12 @@ jQuery.coArtSld = function (contenidos) {
 				
 				//Iniciamos nuestro objeto slider (coart.core)
 				slider.iniciar(datos);
-		});
-	};
+				
+				//Si le hemos pasado una función como segundo argumento,
+				//la ejecutamos y le pasamos como argumento el slider instanciado
+				//"coart.core[nuevaInstancia].contenedor"
+				if (funcion) {funcion(slider.contenedor)}
+		})
+	}
 }
 
