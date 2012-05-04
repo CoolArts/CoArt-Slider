@@ -2,15 +2,42 @@
 <html>
 	<head>
 		<title>Transformando el slider</title>
+		
+		<!--
+			Imprescindible jQuery,
+			en este tutorial estamos usando la versión 1.3.2
+		-->
 		<script type="text/javascript" src="../../../FrameWorks/javascript/jquery.js"></script>
+		
 		<script type="text/javascript" src="js/coart_slplug.js"></script>
+		<!--
+			Sólo será necesario incluir este file.
+			Siempre después de jQuery.
+			El motor del plug-in se encargará de cargar las "clases"
+		-->
+		
+		
+		<!--
+			Dentro de una función document.ready llamaremos al plug-in
+		-->
 		<script type="text/javascript">
 			$(document).ready(function () {
-				$.coArtSld('js/miSlider.json')
+				$.coArtSld('js/miSlider.slider');
+				/*
+					La primera vez que llamemos al plug-in,
+					cargará las clases e instanciará un slider.
+					Cada llamada posterior sólo cargará un slider.
+				*/
 			})
 		</script>
 	</head>
 	<body>
-		<div id="coart_Sld" style="width: 500px; height: 200px"></div>
+		<!--
+			Debemos tener en el escenario un elemento
+			con la id configurada en el .slider de la carga.
+			Este elemento debe tener especificados el width y height
+			para el correcto funcionamiento del slider
+		-->
+		<div id="coart_Sld" style="width: 500px; height: 200px; border: 1px solid black; margin:auto"></div>
 	</body>
 </html>
