@@ -3,55 +3,71 @@
 	<head>
 		<title>Transformando el slider</title>
 		<style type='text/css'>
+			body {
+				margin: 0;
+				padding: 0;
+			}
 			#coart_Sld {
-				width: 500px;
-				height: 200px;
-				border:
-				1px solid black;
+				width: 100%;
+				height: 60px;
+				border-top: 1px solid black;
 				margin:auto;
+				position: fixed !important;
+				bottom: 0;
+				z-index: 500;
 			}
 		</style>
-		
-		<!--
-			Imprescindible jQuery,
-			en este tutorial estamos usando la versión 1.7.2
-		-->
-		<script type="text/javascript" src="../../../FrameWorks/javascript/jquery.1.7.2.js"></script>
-		
-		<script type="text/javascript" src="js/coart_slplug.js"></script>
-		<!--
-			Sólo será necesario incluir este file.
-			Siempre después de jQuery.
-			El motor del plug-in se encargará de cargar las "clases"
-		-->
-		
-		
-		<!--
-			Dentro de una función document.ready llamaremos al plug-in
-		-->
+		<script type="text/javascript" src="js/jquery.1.7.2.js"></script>
+		<!--<script type="text/javascript" src="js/coart_slplug.js"></script>-->
 		<script type="text/javascript">
 			$(document).ready(function () {
-				//La llamada tiene un parámetro obligatorio, que es la url
-				//del objeto donde están almacenados los datos del slider
-				//El segundo parámetro (no obligatorio), será una función
-				//que devolverá el slider para trabajar con el desde jQuery
-				$.coArtSld('js/miSlider.slider', function (slider) {
-					//En este ejemplo centraremos el slider en pantalla
-					//una vez haya cargado
-					slider.animate({
-						top:($(window).height()/2)-(slider.height()/2)
-					}, 1200);
+				var url = 'http://search.twitter.com/search.json?callback=?&q=cristalab&rpp=100';
+				$.getJSON(url, function (data) {
+				console.log(data);
+					var resultados = data.results,
+						slider = $('#coart_Sld'),
+						espacioInicial = 30,
+						media = Math.ceil($(window).width()/espacioInicial);
+						
+						console.log(media);
+					
+					for (x in resultados) {
+						if (x < media) {
+							posicion = espacioInicial*x;
+							
+							slider.append($('<div />')
+								.css ({
+									width: 48,
+									height: 48,
+									display: 'block',
+									overflow: 'hidden',
+									background: 'white',
+									position: 'absolute',
+									top: 0,
+									left: posicion
+								})
+								.append($('<img />')
+									.attr({
+										src: resultados[x].profile_image_url,
+										title: resultados[x].from_user_name+'\nTwitter profile image'
+									})
+									.css({
+										top: 0,
+										left: 0,
+										position: 'realtive'
+									})
+								)
+								
+								
+							)
+						}
+					}
 				});
 			})
+			//'http://twitter.com/status/user_timeline/cristalab.json?count=200&include_entities=1&callback=?'
 		</script>
 	</head>
 	<body>
-		<!--
-			Debemos tener en el escenario un elemento
-			con la id configurada en el .slider de la carga.
-			Este elemento debe tener especificados el width y height
-			para el correcto funcionamiento del slider
-		-->
 		<div id="coart_Sld"></div>
 	</body>
 </html>
